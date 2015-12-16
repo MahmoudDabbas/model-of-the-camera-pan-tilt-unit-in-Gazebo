@@ -1,0 +1,187 @@
+<?xml version='1.0'?>
+<sdf version='1.4'>
+  <model name="d_diff_drive_robot">
+
+
+
+     <link name='Motor1'>
+        <pose>0.025 0.016 0.019 0 0 0</pose>
+ 	<inertial>        
+	 <mass>56</mass>
+	</inertial>        
+       <collision name='collision'>
+          <geometry>
+            <box>
+              <size>.05 .032 .038</size>
+            </box>
+          </geometry>
+        </collision>
+
+        <visual name='visual'>
+          <geometry>
+            <box>
+              <size>.05 .032 .038</size>
+            </box>
+          </geometry>
+	  <material> 
+	    <ambient>0 1 0 1</ambient>
+	      <diffuse>0 1 0 1</diffuse>
+	      <specular>0.1 0.1 0.1 1</specular>
+	      <emissive>0 0 0 0</emissive>
+	  </material>
+        </visual>
+
+
+
+  </link>
+     <link name='Motor2'>
+  	  <pose>0.036 0.016 0.064 0 0 0</pose>
+
+        <collision name='collision'>
+          <geometry>
+            <box>
+              <size>.038 .032 .050</size>
+            </box>
+          </geometry>
+        </collision>
+
+        <visual name='visual'>
+          <geometry>
+            <box>
+              <size>.038 .032 .050</size>
+            </box>
+          </geometry>
+	  <material>
+	    <ambient>1 1 0 1</ambient>
+	      <diffuse>1 1 0 1</diffuse>
+	      <specular>0.1 0.1 0.1 1</specular>
+	      <emissive>0 0 0 0</emissive>
+	  </material>
+        </visual>
+
+
+
+  </link>
+
+
+<!-- MotorTop1 -->
+
+  <link name="MotorTop1">
+    <pose>0.036 0.016 0.039 0 0 0</pose>
+    <collision name="collision">
+      <geometry>
+        <cylinder>
+          <radius>.011</radius>
+          <length>.002</length>
+        </cylinder>
+      </geometry>
+    </collision>
+    <visual name="visual">
+      <geometry>
+        <cylinder>
+          <radius>.011</radius>
+          <length>.002</length>
+        </cylinder>
+      </geometry>
+    </visual>
+  </link>
+
+<!-- MotorTop2 -->
+
+  <link name="MotorTop2">
+  	  <pose>0.037 0.0 0.075 1.570796327 0 0</pose>
+    <collision name="collision">
+      <geometry>
+        <cylinder>
+          <radius>.011</radius>
+          <length>.002</length>
+        </cylinder>
+      </geometry>
+    </collision>
+    <visual name="visual">
+      <geometry>
+        <cylinder>
+          <radius>.011</radius>
+          <length>.002</length>
+        </cylinder>
+      </geometry>
+    </visual>
+  </link>
+
+
+
+<!-- Axel -->
+<joint type="revolute" name="right_wheel_hinge">
+
+    <pose>0.00 0.00 -0.01 0 0 0</pose>
+    <child>MotorTop1</child>
+    <parent>Motor1</parent>
+    <axis>
+      <xyz>0 0 1</xyz>
+    </axis>
+  </joint>
+
+  <joint type="revolute" name="MotorTop1_Motor2">
+
+    <pose>0 0 0.0 0 0 0</pose>
+    <child>Motor2</child>
+    <parent>MotorTop1</parent>
+    <axis>
+      <xyz>0 0 1</xyz>
+      <limit>
+        <upper>0</upper>
+        <lower>0</lower>
+      </limit>
+    </axis>
+  </joint>
+
+<joint type="revolute" name="left_wheel_hinge">
+
+  	  <pose>-0.0 0.0 0.0 0 0 0</pose>
+    <child>MotorTop2</child>
+    <parent>Motor2</parent>
+    <axis>
+      <xyz>0 1 0</xyz>
+      <limit>
+        <upper>2.617993878</upper>
+        <lower>-2.617993878</lower>
+      </limit>
+    </axis>
+  </joint>
+
+
+
+   <include>
+      <uri>model://camera</uri>
+  	  <pose>0.037 0.016 0.096 0 0 0</pose>
+      <name>camera</name>
+<!--      <plugin name='camera_dump' filename='libcamera_dump.so'/> -->
+    </include>
+  <joint name="camera_joint_2" type="revolute">
+    <child>camera::link</child>
+    <parent>MotorTop2</parent>
+    <axis>
+      <xyz>0 0 0</xyz>
+      <limit>
+        <upper>0</upper>
+        <lower>0</lower>
+      </limit>
+    </axis>
+
+  </joint>
+
+<!-- 2.617993878 -->
+
+
+
+
+
+    <plugin filename="libmodel_diff_drive.so" name="model_diff_drive_plugin">
+
+     <left_wheel_hinge>left_wheel_hinge</left_wheel_hinge>
+      <right_wheel_hinge>right_wheel_hinge</right_wheel_hinge>
+    </plugin>
+  </model>
+
+
+</sdf>
