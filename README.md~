@@ -2,11 +2,12 @@
 
 Please run the following in the terminal:
 
-Create the build directory:
+Create the build directory
+
 $ mkdir ~/gazebo_plugin_tutorial/build
 $ cd ~/gazebo_plugin_tutorial/build
 
 
-Compile the code:
+Compile the code.
 $ cmake ../
 $ make

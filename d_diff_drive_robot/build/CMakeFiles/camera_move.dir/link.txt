@@ -1,0 +1,1 @@
+/usr/bin/c++  -fPIC    -shared -Wl,-soname,libcamera_move.so -o libcamera_move.so CMakeFiles/camera_move.dir/camera_move.cc.o -L/usr/lib/gazebo-2.2/plugins 
